@@ -1,17 +1,3 @@
-# Copyright 2016 The TensorFlow Authors. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
 """Generic evaluation script that evaluates a model using a given dataset."""
 
 from __future__ import absolute_import
@@ -29,7 +15,7 @@ from tensorboard import summary as summary_lib
 slim = tf.contrib.slim
 
 tf.app.flags.DEFINE_integer(
-    'batch_size', 183, 'The number of samples in each batch.')
+    'batch_size', 60, 'The number of samples in each batch.')
 
 tf.app.flags.DEFINE_integer(
     'max_num_batches', None,
@@ -40,13 +26,13 @@ tf.app.flags.DEFINE_string(
 
 tf.app.flags.DEFINE_string(
     'checkpoint_path',
-    './tfmodel_mobilenet_v1/6classes/face/cross_entire_6/cross_entire6_alpha0.001_rate0.94_decay15_lr0.045_step8k_dropout0.5_momentum0.9',
+    './tfmodel_mobilenet_v1/ur_directory',
     'The directory where the model was written to or an absolute path to a '
     'checkpoint file.')
 
 tf.app.flags.DEFINE_string(
     'eval_dir',
-    './eval/mobilenet_v1/6classes/face/cross_entire_6/jaffeacc_xcentral_cross_entire6_alpha0.001_rate0.94_decay15_lr0.045_step8k_dropout0.5_momentum0.9',
+    './eval/mobilenet_v1/ur_directory',
     'Directory where the results are saved to.')
 
 tf.app.flags.DEFINE_integer(
@@ -58,11 +44,10 @@ tf.app.flags.DEFINE_string(
 
 tf.app.flags.DEFINE_string(
     'dataset_split_name', 'valid', 'The name of the train/test split.')
-#tf.app.flags.DEFINE_string(
-#    'dataset_split_name', 'valid', 'The name of the train/test split.') #jaffe
+
 
 tf.app.flags.DEFINE_string(
-    'dataset_dir', '/home/joy/Desktop/YU/jaffe/cross_entire_6/validation', 'The directory where the dataset files are stored.')
+    'dataset_dir', '/home/ur_directory/validation', 'The directory where the dataset files are stored.')
 
 tf.app.flags.DEFINE_integer(
     'labels_offset', 0,
@@ -174,17 +159,7 @@ def main(_):
         #'pr_curve': slim.metrics.streaming_curve_points(labels=labels,predictions=tf.cast(predictions,tf.float32),curve='PR',)
 
     })
-
-    #summaries = set(tf.get_collection(tf.GraphKeys.SUMMARIES))
-    # Print the summaries to screen.
-    '''
-    for name, value in names_to_values.items():
-      summary_name = 'eval/%s' % name
-      op = tf.summary.scalar(summary_name, value, collections=[])
-      #op = tf.summary.tensor_summary(summary_name, value, collections=[])   #revised
-      op = tf.Print(op, [value], summary_name)
-      tf.add_to_collection(tf.GraphKeys.SUMMARIES, op)
-    '''
+    
 
     # revised:
     for name, value in names_to_values.items():
@@ -225,29 +200,6 @@ def main(_):
                     variables_to_restore=variables_to_restore)
             exist.append(checkpoint_path)
         time.sleep(5)
-
-
-    '''
-    if tf.gfile.IsDirectory(FLAGS.checkpoint_path):
-        checkpoint_path = tf.train.latest_checkpoint(FLAGS.checkpoint_path)
-    else:
-        checkpoint_path = FLAGS.checkpoint_path
-    
-    if tf.gfile.IsDirectory(FLAGS.checkpoint_path):
-        if tf.train.latest_checkpoint(FLAGS.checkpoint_path):
-            checkpoint_path = tf.train.latest_checkpoint(FLAGS.checkpoint_path)
-        else:
-            checkpoint_path = FLAGS.checkpoint_path
-    
-    tf.logging.info('Evaluating %s' % checkpoint_path)
-    
-    slim.evaluation.evaluate_once(
-        master=FLAGS.master,
-        checkpoint_path=checkpoint_path,
-        logdir=FLAGS.eval_dir,
-        num_evals=num_batches,
-        eval_op=list(names_to_updates.values()),
-        variables_to_restore=variables_to_restore)'''
 
 
 if __name__ == '__main__':

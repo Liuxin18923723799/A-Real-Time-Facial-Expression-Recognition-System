@@ -1,8 +1,10 @@
+# This code split the orginal FER2013 dataset into three independent csv files (train, validation, test)
+
 # -*- coding: utf-8 -*-
 import csv
 import os
 
-database_path = '/home/joy/Desktop/YU/fer2013'
+database_path = '/home/ur_directory_to_the_dataset/fer2013'
 datasets_path = './datasets'
 csv_file = os.path.join(database_path, 'fer2013.csv')
 train_csv = os.path.join(datasets_path, 'train.csv')

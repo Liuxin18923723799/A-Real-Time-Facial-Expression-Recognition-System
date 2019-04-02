@@ -144,65 +144,8 @@ config.gpu_options.allow_growth = True
 def main(_):
 
     start = timeit.default_timer()
-    # Read from images:
-    '''
-    with tf.Session(graph=graph, config=config) as sess:
-        # Get the input and output of the computing graph:
-        input = sess.graph.get_tensor_by_name('input:0')
-        output = sess.graph.get_tensor_by_name('MobilenetV1/Predictions/Reshape_1:0')
-
-        # Get the faces in a frame:
-        face_start = timeit.default_timer()
-        faces, face_data, face_length = face_detection(frame)
-        face_time = timeit.default_timer() - face_start
-        print('face_time: {0}'.format(face_time))
-        face_data = sess.run(face_data)
-
-        # Do the inference:
-
-        #options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
-        #run_metadata = tf.RunMetadata()
-
-        #result = sess.run(output, feed_dict={input: face_data},options=options, run_metadata=run_metadata)
-
-        inf_start = timeit.default_timer()
-
-        result = sess.run(output, feed_dict={input: face_data})
-        print('results: ', result)
-
-        inf_end = timeit.default_timer()
-        inf_time = inf_end - inf_start
-        print('inf_time: {0}'.format(inf_time))
-
-        processing_time = inf_end - start
-        print('processing_time: {0}'.format(processing_time))
-
-        # print('results: ', result)
-        # Create the Timeline object, and write it to a json file:
-        #fretched_timeline = timeline.Timeline(run_metadata.step_stats)
-        #chrome_trace = fretched_timeline.generate_chrome_trace_format()
-
-        #with open('timeline_inference_abba.json', 'w') as f:
-        #    f.write(chrome_trace)
-
-
-        for i, (x, y, w, h) in enumerate(faces):
-            print('face_%d' % i)
-            ind = np.where(result[i, :] == np.max(result[i, :]))
-            index = int(ind[0][0])
-            print (list[index])
-            print ('\n')
-
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            font = cv2.FONT_HERSHEY_SIMPLEX
-            cv2.putText(frame, list[index], (x + 3, y + 10), font, 3, (255, 255, 255), 2, cv2.LINE_AA)
-
-        cv2.imshow('frame', frame)
     
-        
-            
 
-    '''
     # Read from camera:
     with tf.Session(graph=graph, config=config) as sess:
 
@@ -261,6 +204,62 @@ def main(_):
 
         cap.release()
         cv2.destroyAllWindows()
+
+    # Read from images:
+    '''
+    with tf.Session(graph=graph, config=config) as sess:
+        # Get the input and output of the computing graph:
+        input = sess.graph.get_tensor_by_name('input:0')
+        output = sess.graph.get_tensor_by_name('MobilenetV1/Predictions/Reshape_1:0')
+
+        # Get the faces in a frame:
+        face_start = timeit.default_timer()
+        faces, face_data, face_length = face_detection(frame)
+        face_time = timeit.default_timer() - face_start
+        print('face_time: {0}'.format(face_time))
+        face_data = sess.run(face_data)
+
+        # Do the inference:
+
+        #options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
+        #run_metadata = tf.RunMetadata()
+
+        #result = sess.run(output, feed_dict={input: face_data},options=options, run_metadata=run_metadata)
+
+        inf_start = timeit.default_timer()
+
+        result = sess.run(output, feed_dict={input: face_data})
+        print('results: ', result)
+
+        inf_end = timeit.default_timer()
+        inf_time = inf_end - inf_start
+        print('inf_time: {0}'.format(inf_time))
+
+        processing_time = inf_end - start
+        print('processing_time: {0}'.format(processing_time))
+
+        # print('results: ', result)
+        # Create the Timeline object, and write it to a json file:
+        #fretched_timeline = timeline.Timeline(run_metadata.step_stats)
+        #chrome_trace = fretched_timeline.generate_chrome_trace_format()
+
+        #with open('timeline_inference_abba.json', 'w') as f:
+        #    f.write(chrome_trace)
+
+
+        for i, (x, y, w, h) in enumerate(faces):
+            print('face_%d' % i)
+            ind = np.where(result[i, :] == np.max(result[i, :]))
+            index = int(ind[0][0])
+            print (list[index])
+            print ('\n')
+
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            cv2.putText(frame, list[index], (x + 3, y + 10), font, 3, (255, 255, 255), 2, cv2.LINE_AA)
+
+        cv2.imshow('frame', frame)
+    '''
 
 
 if __name__ == '__main__':

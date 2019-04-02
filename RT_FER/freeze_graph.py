@@ -1,17 +1,4 @@
-# Copyright 2015 The TensorFlow Authors. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
+
 r"""Converts checkpoint variables into Const ops in a standalone GraphDef file.
 
 This script is designed to take a GraphDef proto, a SaverDef proto, and a set of
@@ -61,11 +48,11 @@ from tensorflow.python.training import saver as saver_lib
 FLAGS = tf.app.flags.FLAGS
 
 tf.app.flags.DEFINE_string(
-    'input_graph', './export_in_graph/8large_5fold_mobilenet_v1_inference_graph.pb', 'The address of TensorFlow \'GraphDef\' file to load.')
+    'input_graph', './export_in_graph/ur_directory.pb', 'The address of TensorFlow \'GraphDef\' file to load.')
 
 tf.app.flags.DEFINE_string(
     'input_checkpoint',
-    '/home/joy/Desktop/YU/slim_ck+/tfmodel_mobilenet_v1/8classes_large/face/5_fold/rate0.94_decay15_lr0.045_step10000_dropout0.5_momentum0.9/model.ckpt-5323',
+    '/home/ur_directory',
     'The address of TensorFlow variables file to load.')
 
 tf.app.flags.DEFINE_string(
@@ -74,7 +61,7 @@ tf.app.flags.DEFINE_string(
 
 tf.app.flags.DEFINE_string(
     'output_graph',
-    './output_frozen_graph/8large/5fold_rate0.94_decay15_lr0.045_step8000_dropout0.5_momentum0.9.pb',
+    './output_frozen_graph/ur_directory.pb',
     'The address of Output \'GraphDef\' file name writing to.')
 
 tf.app.flags.DEFINE_boolean(
@@ -313,14 +300,7 @@ def freeze_graph(input_graph,
       saved_model_tags.split(","), checkpoint_version=checkpoint_version)
 
 
-'''def main(unused_args):
-  freeze_graph(FLAGS.input_graph, FLAGS.input_saver, FLAGS.input_binary,
-               FLAGS.input_checkpoint, FLAGS.output_node_names,
-               FLAGS.restore_op_name, FLAGS.filename_tensor_name,
-               FLAGS.output_graph, FLAGS.clear_devices, FLAGS.initializer_nodes,
-               FLAGS.variable_names_whitelist, FLAGS.variable_names_blacklist,
-               FLAGS.input_meta_graph, FLAGS.input_saved_model_dir,
-               FLAGS.saved_model_tags, FLAGS.checkpoint_version)'''
+
 def main(_):
     freeze_graph(FLAGS.input_graph, FLAGS.input_saver, FLAGS.input_binary,
                  FLAGS.input_checkpoint, FLAGS.output_node_names,
@@ -333,108 +313,5 @@ def main(_):
 
 
 if __name__ == "__main__":
-    '''
-  parser = argparse.ArgumentParser()
-  parser.register("type", "bool", lambda v: v.lower() == "true")
-  parser.add_argument(
-      "--input_graph",
-      type=str,
-      default="",
-      help="TensorFlow \'GraphDef\' file to load.")
-  parser.add_argument(
-      "--input_saver",
-      type=str,
-      default="",
-      help="TensorFlow saver file to load.")
-  parser.add_argument(
-      "--input_checkpoint",
-      type=str,
-      default="",
-      help="TensorFlow variables file to load.")
-  parser.add_argument(
-      "--checkpoint_version",
-      type=int,
-      default=saver_pb2.SaverDef.V2,
-      help="Tensorflow variable file format")
-  parser.add_argument(
-      "--output_graph",
-      type=str,
-      default="",
-      help="Output \'GraphDef\' file name.")
-  parser.add_argument(
-      "--input_binary",
-      nargs="?",
-      const=True,
-      type="bool",
-      default=False,
-      help="Whether the input files are in binary format.")
-  parser.add_argument(
-      "--output_node_names",
-      type=str,
-      default="",
-      help="The name of the output nodes, comma separated.")
-  parser.add_argument(
-      "--restore_op_name",
-      type=str,
-      default="save/restore_all",
-      help="""\
-      The name of the master restore operator. Deprecated, unused by updated \
-      loading code.
-      """)
-  parser.add_argument(
-      "--filename_tensor_name",
-      type=str,
-      default="save/Const:0",
-      help="""\
-      The name of the tensor holding the save path. Deprecated, unused by \
-      updated loading code.
-      """)
-  parser.add_argument(
-      "--clear_devices",
-      nargs="?",
-      const=True,
-      type="bool",
-      default=True,
-      help="Whether to remove device specifications.")
-  parser.add_argument(
-      "--initializer_nodes",
-      type=str,
-      default="",
-      help="Comma separated list of initializer nodes to run before freezing.")
-  parser.add_argument(
-      "--variable_names_whitelist",
-      type=str,
-      default="",
-      help="""\
-      Comma separated list of variables to convert to constants. If specified, \
-      only those variables will be converted to constants.\
-      """)
-  parser.add_argument(
-      "--variable_names_blacklist",
-      type=str,
-      default="",
-      help="""\
-      Comma separated list of variables to skip converting to constants.\
-      """)
-  parser.add_argument(
-      "--input_meta_graph",
-      type=str,
-      default="",
-      help="TensorFlow \'MetaGraphDef\' file to load.")
-  parser.add_argument(
-      "--input_saved_model_dir",
-      type=str,
-      default="",
-      help="Path to the dir with TensorFlow \'SavedModel\' file and variables.")
-  parser.add_argument(
-      "--saved_model_tags",
-      type=str,
-      default="serve",
-      help="""\
-      Group of tag(s) of the MetaGraphDef to load, in string format,\
-      separated by \',\'. For tag-set contains multiple tags, all tags \
-      must be passed in.\
-      """)
-  FLAGS, unparsed = parser.parse_known_args()
-  app.run(main=main, argv=[sys.argv[0]] + unparsed)'''
+   
     tf.app.run()

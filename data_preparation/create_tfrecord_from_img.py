@@ -1,3 +1,5 @@
+# This code is generating the tfrecord file from the prepared images.
+
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -17,7 +19,7 @@ from datasets.dataset_utils import image_to_tfexample
 
 flags = tf.app.flags
 
-flags.DEFINE_string('dataset_dir', '/home/joy/Desktop/YU/fer2013/valid_folder', 'String: The dataset directory to where your store your images')
+flags.DEFINE_string('dataset_dir', '/home/ur_directory/fer2013/valid_folder', 'String: The dataset directory to where your store your images')
 
 flags.DEFINE_float('validation_ratio', 0, 'Float: The proportion of examples in the dataset to be used for validation')
 
@@ -134,20 +136,6 @@ def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, _NU
   sys.stdout.write('\n')
   sys.stdout.flush()
 
-'''
-def _clean_up_temporary_files(dataset_dir):
-  """Removes temporary files used to create the dataset.
-
-  Args:
-    dataset_dir: The directory where the temporary files are stored.
-  """
-  filename = _DATA_URL.split('/')[-1]
-  filepath = os.path.join(dataset_dir, filename)
-  tf.gfile.Remove(filepath)
-
-  tmp_dir = os.path.join(dataset_dir, 'flower_photos')
-  tf.gfile.DeleteRecursively(tmp_dir)
-'''
 
 def _dataset_exists(dataset_dir, _NUM_SHARDS):
   for split_name in ['train', 'validation']:
@@ -158,8 +146,12 @@ def _dataset_exists(dataset_dir, _NUM_SHARDS):
         return False
   return True
 
+
+
 #==========================================================CONVERSION===============================================================
+
 def main():
+
     #============================================CHECK===============================================
     # Check if there is a tfrecord_filename entered
     if not FLAGS.tfrecord_filename:
@@ -175,6 +167,7 @@ def main():
         return None
     # ========================================END OF CHECK===========================================
 
+
     # Get a list of photo_filenames like ['123.jpg', '456.jpg'...] and a list of sorted class names from parsing the subdirectories
     photo_filenames, class_names = _get_filenames_and_classes(FLAGS.dataset_dir, FLAGS.folder)
 
@@ -189,6 +182,7 @@ def main():
     random.shuffle(photo_filenames)
     #training_filenames = photo_filenames[_NUM_VALIDATION:]
     #validation_filenames = photo_filenames[:_NUM_VALIDATION]
+
 
     # First, convert the training and validation sets.
     _convert_dataset('validation', photo_filenames, class_names_to_ids,

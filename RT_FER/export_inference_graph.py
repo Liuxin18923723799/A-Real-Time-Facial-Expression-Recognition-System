@@ -1,18 +1,4 @@
-# Copyright 2017 The TensorFlow Authors. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
-r"""Saves out a GraphDef containing the architecture of the model.
+"""Saves out a GraphDef containing the architecture of the model.
 
 To use it, run something like this, with a model name defined by slim:
 
@@ -95,10 +81,10 @@ tf.app.flags.DEFINE_integer(
     'class for the ImageNet dataset.')
 
 tf.app.flags.DEFINE_string(
-    'output_file', './export_in_graph/8large_5fold_mobilenet_v1_inference_graph.pb', 'Where to save the resulting file to.')
+    'output_file', './export_in_graph/ur_directory.pb', 'Where to save the resulting file to.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_dir', '/home/joy/Desktop/YU/ck+/8classes_large/face(8)/5_fold/train', 'Directory to save intermediate dataset files to')
+    'dataset_dir', '/home/ur_directory/train', 'Directory to save intermediate dataset files to')
 
 FLAGS = tf.app.flags.FLAGS
 

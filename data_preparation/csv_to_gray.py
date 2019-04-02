@@ -1,3 +1,6 @@
+# This code convert the csv files which contain the images into .jpg format 
+# in each class folder it belong to.
+
 # -*- coding: utf-8 -*-
 import csv
 import os

@@ -41,10 +41,3 @@ def get_center_loss(features, labels, alpha, num_classes, name_scope):
 
     return loss, centers, centers_update_op
 
-'''
-if FLAGS.center_loss is True:
-        c_loss, centers, centers_update_op = center_loss.get_center_loss(end_points['features/teamid'], tf.argmax(labels, 1), 0.001, 3, name_scope='teamid_center')
-        c_loss = 0.001 * c_loss
-        tf.add_to_collection(tf.GraphKeys.LOSSES, c_loss)
-        tf.add_to_collection(tf.GraphKeys.UPDATE_OPS, centers_update_op)
-'''

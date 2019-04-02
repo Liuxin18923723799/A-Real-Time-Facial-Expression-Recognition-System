@@ -1,17 +1,3 @@
-# Copyright 2016 The TensorFlow Authors. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
 """Generic training script that trains a model using a given dataset."""
 
 from __future__ import absolute_import
@@ -36,9 +22,8 @@ tf.app.flags.DEFINE_string(
 
 tf.app.flags.DEFINE_string(
     'train_dir',
-    './tfmodel_mobilenet_v1/6classes/face/cross_entire_6/cross_entire6_alpha0.001_rate0.94_decay15_lr0.045_step8k_dropout0.5_momentum0.9',
+    './tfmodel_mobilenet_v1/ur_directory',
     'Directory where checkpoints and event logs are written to.')
-#7classes/face/contempt_exclude/alpha0.5_rate0.94_decay15_lr0.045_step16000_dropout0.5_momentum0.9
 
 tf.app.flags.DEFINE_integer('num_clones', 1,
                             'Number of model clones to deploy.')
@@ -127,7 +112,7 @@ tf.app.flags.DEFINE_float('rmsprop_momentum', 0.9, 'Momentum.')
 
 tf.app.flags.DEFINE_float('rmsprop_decay', 0.9, 'Decay term for RMSProp.')
 
-#Add center_loss:
+# Choices of adding the center_loss or not:
 tf.app.flags.DEFINE_boolean('center_loss', True, 'Center loss.')
 
 #######################
@@ -140,18 +125,14 @@ tf.app.flags.DEFINE_string(
     'Specifies how the learning rate is decayed. One of "fixed", "exponential",'
     ' or "polynomial"')
 
-#tf.app.flags.DEFINE_float('learning_rate', 0.045, 'Initial learning rate.')
 tf.app.flags.DEFINE_float('learning_rate', 0.045, 'initial learning rate')
 
 tf.app.flags.DEFINE_float(
     'end_learning_rate', 0.0001,
     'The minimal end learning rate used by a polynomial decay learning rate.')
-#0.0001
+
 tf.app.flags.DEFINE_float(
     'label_smoothing', 0.0, 'The amount of label smoothing.')
-
-#tf.app.flags.DEFINE_float(
-   # 'learning_rate_decay_factor', 0.94, 'Learning rate decay factor.')
 
 tf.app.flags.DEFINE_float('learning_rate_decay_factor', 0.94,'Learning rate decay factor.')
 
@@ -183,7 +164,7 @@ tf.app.flags.DEFINE_string(
     'dataset_split_name', 'train', 'The name of the train/test split.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_dir', '/home/joy/Desktop/YU/ck+/6classes/face(6)/cross_jaffe/train', 'The directory where the dataset files are stored.')
+    'dataset_dir', '/home/joy/UR_DATASET/train', 'The directory where the dataset files are stored.')
 
 tf.app.flags.DEFINE_integer(
     'labels_offset', 0,
@@ -211,17 +192,18 @@ tf.app.flags.DEFINE_integer('max_number_of_steps', 8000,
 # Fine-Tuning Flags #
 #####################
 
+# Load your pre-trained model:
 tf.app.flags.DEFINE_string(
     'checkpoint_path',
-     '/home/joy/Desktop/YU/slim_fer2013/tfmodel_mobilenet_v1/pretrain_epoch_decay20_center_0.001/model.ckpt-990223',
+     None,
     'The path to a checkpoint from which to fine-tune.')
-#/home/joy/Desktop/YU/slim_ck+/mobilenet_v1_checkpoint/mobilenet_v1_1.0_224.ckpt
-#/home/joy/Desktop/YU/slim_fer2013/tfmodel_mobilenet_v1/pretrain_epoch_decay20_center_0.001/model.ckpt-990223
 
+# Exclude the layers where you don't want to restore the pre-trained paramters from:
 tf.app.flags.DEFINE_string(
-    'checkpoint_exclude_scopes', 'MobilenetV1/Logits,MobilenetV1/Conv2d_0/Conv2D',
+    'checkpoint_exclude_scopes', None,
     'Comma-separated list of scopes of variables to exclude when restoring '
-    'from a checkpoint.')  #MobilenetV1/Conv2d_0/Conv2D, MobilenetV1/Logits, MobilenetV2/Conv2d_0
+    'from a checkpoint.')  
+# 'MobilenetV1/Logits,MobilenetV1/Conv2d_0/Conv2D'
 
 tf.app.flags.DEFINE_string(
     'trainable_scopes', None,
@@ -375,7 +357,7 @@ def _get_init_fn():
       variables_to_restore,
       ignore_missing_vars=FLAGS.ignore_missing_vars)
 
-#A LIST OF VARIABLES TO TRAIN.
+# A LIST OF VARIABLES TO TRAIN.
 def _get_variables_to_train():
   """Returns a list of variables to train.
 
@@ -471,9 +453,12 @@ def main(_):
       images, labels = batch_queue.dequeue()
       logits, end_points = network_fn(images)
 
+
       #############################
       # Specify the loss function #
       #############################
+
+      # The center loss added:
       if FLAGS.center_loss is True:
           labels_argmax = tf.argmax(labels, 1)
           feature = tf.squeeze(end_points['AvgPool_1a'], [1, 2], name='centerloss_feature')
