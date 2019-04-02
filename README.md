@@ -42,7 +42,7 @@ Inspired by the work of Wen et al. [4], the center loss is applied in the traini
 ### Training:
 **RT-FER/train_image_classifier.py**
 
-![](images/training_paras.png =180x100)
+![](images/training_paras.png=180x100)
 
 ### Offline Experiments：
 **RT-FER/eval_image_classifier.py**
