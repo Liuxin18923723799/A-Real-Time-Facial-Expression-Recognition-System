@@ -29,7 +29,8 @@ During training, all the input images are resized into 48x48 for consistency.
 The first version of MobileNet (MobileNet V1) [1] is employed as the CNN architecture in both offline and real-time systems of our work since it focuses both on speed and size, and it is easy to be tuned for resources versus accuracy as highlighted in the paper. The core of the MobileNet V1 is that it decouples standard convolution into a depthwise convolution and a 1 × 1 pointwise convolution.
 
 ### Transfer Learning Strategy
-One main problem for CNN-based FER is the insufficient size of the most of existing facial expression datasets. The required size of the labeled training data for CNNs to learn and extract features and obtain high accuracies is asked to be in millions while the size of most facial expression datasets is only hundreds or thousands. Training deep models with such limited amount of data is rather challenging since sometimes it may lead to the problem of overfitting. In addition, it is time-consuming for training from scratch without taking advantage of the pretrained model. One of the common ways to address this problem is to use the so-called fine-tuning strategy. A hallmark of this approach is the fine-tuning of a small target dataset based on the pretrained models on the ILSVRC-2012 (ImageNet). To furthercompensate for the small size of the CK+ and JAFFE datasets during fine-tuning (the size of which both are under 1K) and overcome the difference between the target task and the source task, we follow the recent studies of [2, 3] using the FER-2013 dataset (the size of which is more than 30K).
+One main problem for CNN-based FER is the insufficient size of the most of existing facial expression datasets. The required size of the labeled training data for CNNs to learn and extract features and obtain high accuracies is asked to be in millions while the size of most facial expression datasets is only hundreds or thousands. Training deep models with such limited amount of data is rather challenging since sometimes it may lead to the problem of overfitting. In addition, it is time-consuming for training from scratch without taking advantage of the pretrained model. One of the common ways to address this problem is to use the so-called fine-tuning strategy. A hallmark of this approach is the fine-tuning of a small target dataset based on the pretrained models on the ILSVRC-2012 (ImageNet). To further
+compensate for the small size of the CK+ and JAFFE datasets during fine-tuning (the size of which both are under 1K) and overcome the difference between the target task and the source task, we follow the recent studies of [2, 3] using the FER-2013 dataset (the size of which is more than 30K).
 
 The pretrained model from ImageNet on MobileNet for the first-stage fine-tuning can be found in the for [Tensowflow Slim](https://github.com/tensorflow/models/tree/master/research/slim) library on github.
 
@@ -41,7 +42,7 @@ Inspired by the work of Wen et al. [4], the center loss is applied in the traini
 ### Training:
 **RT-FER/train_image_classifier.py**
 
-![](images/training_paras.png){ width=70%, height=70% }
+![](images/training_paras.png | width = "180")
 
 ### Offline Experiments：
 **RT-FER/eval_image_classifier.py**
