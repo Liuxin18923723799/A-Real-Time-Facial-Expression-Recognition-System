@@ -42,27 +42,28 @@ Inspired by the work of Wen et al. [4], the center loss is applied in the traini
 ### Training:
 **RT-FER/train_image_classifier.py**
 
-![](images/training_paras.png)
+<img src="images/training_paras.png"  height=60% width=60%>
 
-<img src="images/training_paras.png"  height=50% width=50%>
 
 ### Offline Experiments：
 **RT-FER/eval_image_classifier.py**
 
 #### 1. Effects of Two-stage Fine-tuning:
-![](images/two_stage.png)
+<img src="images/two_stage.png"  height=50% width=50%>
+
 #### 2. Effects of Center Loss:
-![](images/center_loss.png)
-![](images/center_loss1.png)
+<img src="images/center_loss.png"  height=50% width=50%>
+<img src="images/center_loss1.png"  height=80% width=80%>
 
 #### 3. Evaluation on JAFFE Dataset:
-![](images/jaffe.png)
+<img src="images/jaffe.png"  height=70% width=70%>
 
 #### 4. Evaluation on CK+ Dataset:
-![](images/ck_plus.png)
+<img src="images/ck_plus.png"  height=80% width=80%>
 
 ### Real-time Experiment:
-![](images/rt_performance.png)
+<img src="images/rt_performance.png"  height=80% width=80%>
+
 Note also that when taking any arbitrary number M of people in a single frame of camera into account, the total time cost for this frame is *46.93 + M × (7.49 + 3.57)* ms.
 
 
