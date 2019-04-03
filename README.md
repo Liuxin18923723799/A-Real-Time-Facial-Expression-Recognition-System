@@ -61,15 +61,6 @@ Inspired by the work of Wen et al. [4], the center loss is applied in the traini
 
 <img src="images/jaffe.png"  height=65% width=65%>
 
-<img src="images/two_stage.png"  height=50% width=50%>
-
-#### 2. Effects of Center Loss:
-<img src="images/center_loss.png"  height=50% width=50%>
-<img src="images/center_loss1.png"  height=80% width=80%>
-
-#### 3. Evaluation on JAFFE Dataset:
-<img src="images/jaffe.png"  height=70% width=70%>
-
 #### 4. Evaluation on CK+ Dataset:
 <img src="images/ck_plus.png"  height=80% width=80%>
 
