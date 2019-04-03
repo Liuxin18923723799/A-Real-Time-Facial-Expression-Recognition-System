@@ -1,4 +1,9 @@
 # A Real-Time Facial Expression Recognition System
+
+## Author
+[Yu Miao](https://www.linkedin.com/in/yu-miao-54308a143/)
+
+
 A real-time facial expression recognition (FER) system that can recognize one of the basic facial expressions of several subjects from the webcam at the same time. Our proposed methodology combines a supervised transfer learning strategy and a joint supervision method with the center loss which is crucial for facial tasks. A newly proposed Convolutional Neural Network (CNN) model, **MobileNet**, that contains both accuracy and speed is deployed in both offline and real-time framework which enables fast and accurate real-time output. Evaluations towards two publicly available datasets, **JAFFE** and **CK+**, are carried out respectively. It reaches an accuracy of 95.24% on JAFFE dataset, and an accuracy of 96.92% on 6-class CK+ dataset which only contains the last frames of image sequences. At last, the average run-time cost for the recognition of the real-time implementation is around 3.57 ms/frame on an NVIDIA Quadro K4200 GPU.
 
 ![](images/overview.png)
@@ -68,8 +73,6 @@ Inspired by the work of Wen et al. [4], the center loss is applied in the traini
 <img src="images/rt_performance.png"  height=80% width=80%>
 
 Note also that when taking any arbitrary number M of people in a single frame of camera into account, the total time cost for this frame is *46.93 + M × (7.49 + 3.57)* ms.
-
-
 
 
 
